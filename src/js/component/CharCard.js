@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link, Outlet } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export default function CharCard({ name, birthyear, height, mass, gender, eye_color, hair_color, skin_color }) {
+
+    const {store, actions} = useContext(Context);
 
     const charDetailsData = {
         birthyear: birthyear,
@@ -13,6 +16,16 @@ export default function CharCard({ name, birthyear, height, mass, gender, eye_co
         skin_color: skin_color,
     }
 
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        actions.addToFavorites(name);
+        console.log('hellooo');
+
+        
+    }
+
+    
     //console.log(charDetailsData);
     return (
         <div className="card m-3 p-0" style={{ "width": '19rem' }}>
@@ -25,9 +38,10 @@ export default function CharCard({ name, birthyear, height, mass, gender, eye_co
                     <li className="fs-6">Mass: {mass}</li>
                 </ul>
                 <Link to={`character-details/${name}`} state={charDetailsData} className="bt btn-info" >Details</Link>
-                <button className="btn btn-info ms-1" ><i className="bi bi-heart"></i></button>
+                <button onClick={(e)=> handleClick(e) }><i className="fa fa-heart-o" aria-hidden="true"></i>O</button>
+                
                 <Outlet></Outlet>
             </div>
         </div>
-        )
-    }
+    )
+}

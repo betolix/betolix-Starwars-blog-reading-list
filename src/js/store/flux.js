@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: null,
 			planets: null,
 			vehicles: null,
+			favorites: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -65,7 +66,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				catch(error){
 					//console.log(error);
 				}
-			}
+			},
+			addToFavorites: (name) => {
+				let favorites = getStore().favorites;
+				favorites.push(name);
+				setStore({favorites: favorites});
+				console.log(favorites);
+				
+			},
+			deleteFromFavorites: (name) => {
+				let favorites = getStore().favorites;
+				let newFavorites = favorites.filter( (fave) => fave != name ) ;
+				setStore({favorites : newFavorites});
+							
+			},
 		},
 	};
 };
